@@ -1,0 +1,41 @@
+package com.example.triall;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.*;
+import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+Button cambt;
+ImageView imgvew;
+private static final int pic_id=123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        cambt = findViewById(R.id.camerapp);
+        imgvew = findViewById(R.id.showimg);
+
+        cambt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cam_int = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cam_int,pic_id);
+
+            }
+        });
+    }
+    protected void onActivityResult(int requestcode,int resultcode,Intent data) {
+
+        super.onActivityResult(requestcode, resultcode, data);
+        if(requestcode==pic_id){
+            Bitmap photo= (Bitmap)data.getExtras().get("data");
+            imgvew.setImageBitmap(photo);
+        }
+    }
+}
