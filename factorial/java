@@ -1,0 +1,41 @@
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        EditText numberEditText = findViewById(R.id.numberEditText);
+        Button calculateButton = findViewById(R.id.calculateButton);
+        TextView resultTextView = findViewById(R.id.resultTextView);
+
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputStr = numberEditText.getText().toString();
+                if (!inputStr.isEmpty()) {
+                    int number = Integer.parseInt(inputStr);
+                    long factorial = calculateFactorial(number);
+                    resultTextView.setText("Factorial: " + factorial);
+                } else {
+                    resultTextView.setText("Factorial: ");
+                }
+            }
+        });
+    }
+
+    private long calculateFactorial(int number) {
+        if (number == 0 || number == 1) {
+            return 1;
+        } else {
+            return number * calculateFactorial(number - 1);
+        }
+    }
+}
